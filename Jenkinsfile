@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     stages {
@@ -14,8 +13,12 @@ pipeline {
                 bat "docker build -t=adamburczykdev/selenium ."
             }
         }
-        stage('Push Docker Image') {
+        stage('Push Docker Image') { 
+            environment {
+                DOCKER_HUB = credentials('dockerhub-creds')
+            }
             steps {
+                bat "docker login -u %DOCKER_HUB_USR% -p %DOCKER_HUB_PSW%"
                 bat "docker push adamburczykdev/selenium"
             }
         }
