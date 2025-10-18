@@ -5,8 +5,9 @@ pipeline {
     stages {
         stage('Build Jar') 
         {
-            steps {
+            steps('Clean and Package') {
                 bat "mvn clean package -DskipTests"
+        }
         }
         stage('Build Docker Image') {
             steps {
@@ -18,7 +19,6 @@ pipeline {
                 bat "docker push adamburczykdev/selenium"
             }
         }
-    }
     }
 
     post {
