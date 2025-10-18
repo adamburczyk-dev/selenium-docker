@@ -18,7 +18,7 @@ pipeline {
                 DOCKER_HUB = credentials('dockerhub-creds')
             }
             steps {
-                bat "docker login -u %DOCKER_HUB_USR% -p %DOCKER_HUB_PSW%"
+                bat 'docker login -u %DOCKER_HUB_USR% -p %DOCKER_HUB_PSW%'
                 bat "docker push adamburczykdev/selenium"
             }
         }
@@ -26,13 +26,7 @@ pipeline {
 
     post {
         always {
-            echo 'This will always run after the stages.'
-        }
-        success {
-            echo 'This will run only if the pipeline succeeds.'
-        }
-        failure {
-            echo 'This will run only if the pipeline fails.'
+            bat "docker logout"
         }
     }
 }
